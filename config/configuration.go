@@ -19,15 +19,16 @@ func Init_DB() {
 		"HTTP_HOST":     "127.0.0.1",
 		"HTTP_NAME":     "new_schema",
 	}
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
 
-	ConnectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		config["HTTP_USERNAME"],
 		config["HTTP_PASSWORD"],
 		config["HTTP_HOST"],
 		config["HTTP_PORT"],
 		config["HTTP_NAME"])
+
 	var e error
-	DB, e = gorm.Open(mysql.Open(ConnectionString), &gorm.Config{})
+	DB, e = gorm.Open(mysql.Open(connectionString), &gorm.Config{})
 	if e != nil {
 		panic(e)
 	}
