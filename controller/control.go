@@ -21,7 +21,9 @@ func GetUsersController(c echo.Context) error {
 }
 
 func CreateUserController(c echo.Context) error {
-	user, err := database.CreateUser(c)
+	add_user := models.User{}
+	c.Bind(&add_user)
+	user, err := database.CreateUser(add_user)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
@@ -68,15 +70,15 @@ func GetOneUserController(c echo.Context) error {
 }
 
 func UpdateUserController(c echo.Context) error {
-	var user models.User
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "invalid id",
 		})
 	}
-	c.Bind(&user)
-	update_user, err := database.UpdateUser(id, user)
+	edit_user, err := database.GetOneUser(id)
+	c.Bind(&edit_user)
+	update_user, err := database.UpdateUser(edit_user)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
