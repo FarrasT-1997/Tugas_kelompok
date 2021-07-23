@@ -48,14 +48,14 @@ func DeleteUserController(c echo.Context) error {
 	})
 }
 
-func GetUserController(c echo.Context) error {
+func GetOneUserController(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "invalid id",
 		})
 	}
-	user, err := database.GetUser(id)
+	user, err := database.GetOneUser(id)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
