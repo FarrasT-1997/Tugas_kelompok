@@ -2,7 +2,8 @@ package controller
 
 import (
 	"net/http"
-	"rest_api/database"
+	"rest_api/lib/database"
+	"rest_api/models"
 	"strconv"
 
 	"github.com/labstack/echo"
